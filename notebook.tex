@@ -1,0 +1,986 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Capstone Project - The Battle of the Neighborhoods - Chinese Restaurant}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Capstone Project - The Battle of the
+Neighborhoods}\label{capstone-project---the-battle-of-the-neighborhoods}
+
+\subsubsection{Applied Data Science Capstone by
+IBM/Coursera}\label{applied-data-science-capstone-by-ibmcoursera}
+
+    \subsection{Table of contents}\label{table-of-contents}
+
+\begin{itemize}
+\tightlist
+\item
+  Section \ref{introduction}
+\item
+  Section \ref{data}
+\item
+  Section \ref{methodology}
+\item
+  Section \ref{analysis}
+\item
+  Section \ref{results}
+\item
+  Section \ref{conclusion}
+\end{itemize}
+
+    \subsection{Introduction: Business Problem
+}\label{introduction-business-problem}
+
+    In this project we will try to find an optimal location for a
+restaurant. Specifically, this report will be targeted to stakeholders
+interested in opening an \textbf{Chinese restaurant} in
+\textbf{Toronto}, Canada, the number of whom is increasing because of
+the fast growth of Chinese population in the city.
+
+Since there are lots of restaurants in Toronto we will try to detect
+\textbf{locations that are not already crowded with restaurants}. We are
+also particularly interested in \textbf{areas with no or few Chinese
+restaurants in vicinity}. We would also prefer locations \textbf{as
+close to city center (downtown Toronto) as possible}, assuming that
+first two conditions are met.
+
+We will use our data science powers to generate a few most promissing
+neighborhoods based on this criteria. Advantages of each area will then
+be clearly expressed so that best possible final location can be chosen
+by stakeholders.
+
+    \subsection{Data }\label{data}
+
+    Based on definition of our problem, factors that will influence our
+decission are: * number of existing restaurants in the neighborhood (any
+type of restaurant) * number of and distance to Chinese restaurants in
+the neighborhood, if any * review of the Chinese restaurants in the
+neighborhood, if any * distance of neighborhood from city center
+
+We decided to use definition from
+\href{https://en.wikipedia.org/wiki/List_of_postal_codes_of_Canada:_M}{this
+wikipedia link} to define our neighborhoods.
+
+Following data sources will be needed to extract/generate the required
+information: * number of restaurants and their type, review and location
+in every neighborhood will be obtained using \textbf{Foursquare API} *
+coordinate of Toronto neighborhood will be obtained using a csv file
+input
+
+    \subsubsection{Neighborhood in Toronto}\label{neighborhood-in-toronto}
+
+We download the neighborhood table from the wikipedia page, the table
+contains all neighborhoods in Canada, therefore we extract the ones only
+from Toronto, and attach the coordinates of the neighborhoods using a
+csv file.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{warnings}
+        \PY{n}{warnings}\PY{o}{.}\PY{n}{filterwarnings}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ignore}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{urllib}\PY{n+nn}{.}\PY{n+nn}{request}
+        \PY{k+kn}{import} \PY{n+nn}{html5lib}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{from} \PY{n+nn}{bs4} \PY{k}{import} \PY{n}{BeautifulSoup}
+        \PY{k+kn}{import} \PY{n+nn}{requests}
+        \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{n}{radians}\PY{p}{,} \PY{n}{sin}\PY{p}{,} \PY{n}{cos}\PY{p}{,} \PY{n}{acos}\PY{p}{,} \PY{n}{atan2}\PY{p}{,} \PY{n}{sqrt}
+        
+        \PY{n}{p\PYZus{}can\PYZus{}url} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://en.wikipedia.org/wiki/List\PYZus{}of\PYZus{}postal\PYZus{}codes\PYZus{}of\PYZus{}Canada:\PYZus{}M}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{fp} \PY{o}{=} \PY{n}{urllib}\PY{o}{.}\PY{n}{request}\PY{o}{.}\PY{n}{urlopen}\PY{p}{(}\PY{n}{p\PYZus{}can\PYZus{}url}\PY{p}{)}
+        \PY{n}{p\PYZus{}can\PYZus{}html} \PY{o}{=} \PY{n}{fp}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+        \PY{n}{p\PYZus{}can\PYZus{}html} \PY{o}{=} \PY{n}{p\PYZus{}can\PYZus{}html}\PY{o}{.}\PY{n}{decode}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{utf8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{fp}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+        \PY{n}{p\PYZus{}can} \PY{o}{=} \PY{n}{BeautifulSoup}\PY{p}{(}\PY{n}{p\PYZus{}can\PYZus{}html}\PY{p}{)}
+        
+        \PY{n}{df\PYZus{}p\PYZus{}can} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{tr} \PY{o+ow}{in} \PY{n}{p\PYZus{}can}\PY{o}{.}\PY{n}{table}\PY{o}{.}\PY{n}{find\PYZus{}all}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{n}{td} \PY{o}{=} \PY{n}{tr}\PY{o}{.}\PY{n}{find\PYZus{}all}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{td}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{row} \PY{o}{=} \PY{p}{[}\PY{n}{tr}\PY{o}{.}\PY{n}{text} \PY{k}{for} \PY{n}{tr} \PY{o+ow}{in} \PY{n}{td}\PY{p}{]}
+            \PY{n}{df\PYZus{}p\PYZus{}can}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+        \PY{n}{df\PYZus{}p\PYZus{}can}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{,}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Postcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Borough}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{df\PYZus{}p\PYZus{}can}\PY{o}{=}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Borough}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{!=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Not assigned}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{df\PYZus{}p\PYZus{}can}\PY{o}{=}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{o}{.}\PY{n}{Borough}\PY{o}{.}\PY{n}{notnull}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+        \PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{=}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}\PY{p}{,} \PY{n}{regex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        
+        \PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{where}\PY{p}{(}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Not assigned}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Borough}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{df\PYZus{}p\PYZus{}can}\PY{o}{=}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Postcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Borough}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{p}{)}
+        \PY{n}{coord} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{http://cocl.us/Geospatial\PYZus{}data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{df\PYZus{}coord\PYZus{}can}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{df\PYZus{}p\PYZus{}can}\PY{p}{,} \PY{n}{coord}\PY{p}{,} \PY{n}{left\PYZus{}on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Postcode}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{right\PYZus{}on}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Postal Code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Postal Code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{df\PYZus{}t}\PY{o}{=}\PY{n}{df\PYZus{}coord\PYZus{}can}\PY{p}{[}\PY{n}{df\PYZus{}coord\PYZus{}can}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Borough}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{isin}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Downtown Toronto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{East Toronto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{West Toronto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Central Toronto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+        \PY{n}{dist} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{k}{def} \PY{n+nf}{cal\PYZus{}dist}\PY{p}{(}\PY{n}{lat1}\PY{p}{,}\PY{n}{lon1}\PY{p}{,}\PY{n}{lat2}\PY{p}{,}\PY{n}{lon2}\PY{p}{)}\PY{p}{:}
+            \PY{n}{lat1}\PY{o}{=}\PY{n}{radians}\PY{p}{(}\PY{n}{lat1}\PY{p}{)}
+            \PY{n}{lat2}\PY{o}{=}\PY{n}{radians}\PY{p}{(}\PY{n}{lat2}\PY{p}{)}
+            \PY{n}{dlon} \PY{o}{=} \PY{n}{radians}\PY{p}{(}\PY{n}{lon2} \PY{o}{\PYZhy{}} \PY{n}{lon1}\PY{p}{)}
+            \PY{n}{dlat} \PY{o}{=} \PY{n}{radians}\PY{p}{(}\PY{n}{lat2} \PY{o}{\PYZhy{}} \PY{n}{lat1}\PY{p}{)} 
+            \PY{n}{a} \PY{o}{=} \PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{dlat}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{cos}\PY{p}{(}\PY{n}{lat1}\PY{p}{)} \PY{o}{*} \PY{n}{cos}\PY{p}{(}\PY{n}{lat2}\PY{p}{)} \PY{o}{*} \PY{p}{(}\PY{n}{sin}\PY{p}{(}\PY{n}{dlon}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} 
+            \PY{n}{c} \PY{o}{=} \PY{l+m+mi}{2} \PY{o}{*} \PY{n}{atan2}\PY{p}{(} \PY{n}{sqrt}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{,} \PY{n}{sqrt}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{)} \PY{p}{)} 
+            \PY{n}{d} \PY{o}{=} \PY{l+m+mi}{6371} \PY{o}{*} \PY{n}{c}
+            \PY{k}{return}\PY{p}{(}\PY{n}{d}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{lat}\PY{p}{,} \PY{n}{lon} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+            \PY{n}{dist\PYZus{}c} \PY{o}{=} \PY{n}{cal\PYZus{}dist}\PY{p}{(}\PY{n}{lat}\PY{p}{,}\PY{n}{lon}\PY{p}{,}\PY{l+m+mf}{43.645436}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mf}{79.380978}\PY{p}{)}
+            \PY{n}{dist}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{dist\PYZus{}c}\PY{p}{)}
+        \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{dist}
+        \PY{n}{df\PYZus{}t}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{inplace} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,} \PY{n}{drop} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}
+        \PY{n}{df\PYZus{}t}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}1}]:}   Postcode          Borough                   Neighborhood   Latitude  \textbackslash{}
+        0      M4E     East Toronto                    The Beaches  43.676357   
+        1      M4K     East Toronto    The Danforth West,Riverdale  43.679557   
+        2      M4L     East Toronto  The Beaches West,India Bazaar  43.668999   
+        3      M4M     East Toronto                Studio District  43.659526   
+        4      M4N  Central Toronto                  Lawrence Park  43.728020   
+        
+           Longitude  Distance to Center  
+        0 -79.293031            7.074931  
+        1 -79.352188            2.316830  
+        2 -79.315572            5.261988  
+        3 -79.340923            3.222700  
+        4 -79.388790            0.648280  
+\end{Verbatim}
+            
+    The data looks good, now we have all the neighborhoods in Toronto and
+their coordinates with the distance to Toronto city center. Let's
+visualize the neighborhoods in the map of Toronto.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+ch}{\PYZsh{}!pip install folium}
+        
+        \PY{k+kn}{import} \PY{n+nn}{folium}
+        
+        \PY{n}{map\PYZus{}t} \PY{o}{=} \PY{n}{folium}\PY{o}{.}\PY{n}{Map}\PY{p}{(}\PY{n}{location}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{43.645436}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{79.380978}\PY{p}{]}\PY{p}{,} \PY{n}{zoom\PYZus{}start}\PY{o}{=}\PY{l+m+mi}{12}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} add markers to map}
+        \PY{k}{for} \PY{n}{lat}\PY{p}{,} \PY{n}{lng}\PY{p}{,} \PY{n}{borough}\PY{p}{,} \PY{n}{neighbourhood} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Borough}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+            \PY{n}{label} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{, }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{neighbourhood}\PY{p}{,} \PY{n}{borough}\PY{p}{)}
+            \PY{n}{label} \PY{o}{=} \PY{n}{folium}\PY{o}{.}\PY{n}{Popup}\PY{p}{(}\PY{n}{label}\PY{p}{,} \PY{n}{parse\PYZus{}html}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+            \PY{n}{folium}\PY{o}{.}\PY{n}{CircleMarker}\PY{p}{(}
+                \PY{p}{[}\PY{n}{lat}\PY{p}{,} \PY{n}{lng}\PY{p}{]}\PY{p}{,}
+                \PY{n}{radius}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,}
+                \PY{n}{popup}\PY{o}{=}\PY{n}{label}\PY{p}{,}
+                \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{n}{fill}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+                \PY{n}{fill\PYZus{}color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}3186cc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                \PY{n}{fill\PYZus{}opacity}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{,}
+                \PY{n}{parse\PYZus{}html}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{add\PYZus{}to}\PY{p}{(}\PY{n}{map\PYZus{}t}\PY{p}{)}  
+            
+        \PY{n}{map\PYZus{}t}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} <folium.folium.Map at 0x24425da1128>
+\end{Verbatim}
+            
+    \subsubsection{Foursquare}\label{foursquare}
+
+Now that we have our neighborhoods data, we can use Foursquare API to
+get info on (Chinese) restaurants in each neighborhood.
+
+From the API we will get a list of the restaurants, and their types,
+locations, reviews. And from the list we could feature the neighborhoods
+with the number of restaurants, the number of Chinese restaurants,
+average review of the restaurants, and along with their distance to the
+city center. Using the features, we can cluster the neighborhoods and
+identify the best (group of) neighborhoods for openning a Chinese
+restaurant.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{CLIENT\PYZus{}ID} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NDY0KYVXE2M1QNO1TEQZ3JOJZNG1031QQVXXYR1XX0LVHNO5}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{CLIENT\PYZus{}SECRET} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3RQYFN53TWP4DJZXCGQAV1QNRHO2VEJQTFSEIYBFTBARWGZM}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{VERSION} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{20190401}\PY{l+s+s1}{\PYZsq{}} \PY{c+c1}{\PYZsh{} Foursquare API version}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Category IDs corresponding to Chinese restaurants were taken from Foursquare web site (https://developer.foursquare.com/docs/resources/categories):}
+        
+        \PY{n}{food\PYZus{}category} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{4d4b7105d754a06374d81259}\PY{l+s+s1}{\PYZsq{}} \PY{c+c1}{\PYZsh{} \PYZsq{}Root\PYZsq{} category for all food\PYZhy{}related venues}
+        
+        \PY{n}{chinese\PYZus{}restaurant\PYZus{}categories} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{4bf58dd8d48988d145941735}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3a5e3cf9994f4e043bea}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3a723cf9994f4e043bec}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3a7c3cf9994f4e043bed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{58daa1558bbb0b01f18ec1d3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3a673cf9994f4e043beb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3a903cf9994f4e043bee}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{4bf58dd8d48988d1f5931735}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3a9f3cf9994f4e043bef}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3aaa3cf9994f4e043bf0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3ab53cf9994f4e043bf1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3abe3cf9994f4e043bf2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3ac83cf9994f4e043bf3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3ad23cf9994f4e043bf4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3add3cf9994f4e043bf5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3af23cf9994f4e043bf7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3ae63cf9994f4e043bf6}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3afc3cf9994f4e043bf8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b053cf9994f4e043bf9}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b213cf9994f4e043bfa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b293cf9994f4e043bfb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b343cf9994f4e043bfc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b3b3cf9994f4e043bfd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b463cf9994f4e043bfe}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b633cf9994f4e043c01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b513cf9994f4e043bff}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b593cf9994f4e043c00}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b6e3cf9994f4e043c02}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b773cf9994f4e043c03}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b813cf9994f4e043c04}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b893cf9994f4e043c05}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b913cf9994f4e043c06}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3b9a3cf9994f4e043c07}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                                         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{52af3ba23cf9994f4e043c08}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        
+        \PY{k}{def} \PY{n+nf}{is\PYZus{}chinese\PYZus{}restaurant}\PY{p}{(}\PY{n}{categories}\PY{p}{,} \PY{n}{specific\PYZus{}filter}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:}
+            \PY{n}{specific} \PY{o}{=} \PY{k+kc}{False}
+            \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{categories}\PY{p}{:}
+                \PY{n}{category\PYZus{}id} \PY{o}{=} \PY{n}{c}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                \PY{k}{if} \PY{o+ow}{not}\PY{p}{(}\PY{n}{specific\PYZus{}filter} \PY{o+ow}{is} \PY{k+kc}{None}\PY{p}{)} \PY{o+ow}{and} \PY{p}{(}\PY{n}{category\PYZus{}id} \PY{o+ow}{in} \PY{n}{specific\PYZus{}filter}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{specific} \PY{o}{=} \PY{k+kc}{True}
+            \PY{k}{return} \PY{n}{specific}
+        
+        \PY{k}{def} \PY{n+nf}{get\PYZus{}categories}\PY{p}{(}\PY{n}{categories}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{p}{[}\PY{p}{(}\PY{n}{cat}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{cat}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{cat} \PY{o+ow}{in} \PY{n}{categories}\PY{p}{]}
+        
+        \PY{k}{def} \PY{n+nf}{get\PYZus{}venues\PYZus{}near\PYZus{}location}\PY{p}{(}\PY{n}{lat}\PY{p}{,} \PY{n}{lon}\PY{p}{,} \PY{n}{category}\PY{p}{,} \PY{n}{client\PYZus{}id}\PY{p}{,} \PY{n}{client\PYZus{}secret}\PY{p}{,} \PY{n}{radius}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,} \PY{n}{limit}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
+            \PY{n}{url} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://api.foursquare.com/v2/venues/explore?client\PYZus{}id=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZam{}client\PYZus{}secret=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZam{}v=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZam{}ll=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{,}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZam{}categoryId=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZam{}radius=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZam{}limit=}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}
+                \PY{n}{client\PYZus{}id}\PY{p}{,} \PY{n}{client\PYZus{}secret}\PY{p}{,} \PY{n}{VERSION}\PY{p}{,} \PY{n}{lat}\PY{p}{,} \PY{n}{lon}\PY{p}{,} \PY{n}{category}\PY{p}{,} \PY{n}{radius}\PY{p}{,} \PY{n}{limit}\PY{p}{)}
+            \PY{k}{try}\PY{p}{:}
+                \PY{n}{results} \PY{o}{=} \PY{n}{requests}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{n}{url}\PY{p}{)}\PY{o}{.}\PY{n}{json}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{response}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{groups}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{items}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+                \PY{n}{venues} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{venue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{id}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                           \PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{venue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                           \PY{n}{get\PYZus{}categories}\PY{p}{(}\PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{venue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categories}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+                           \PY{p}{(}\PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{venue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{venue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lng}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+                           \PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{venue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+                           \PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{venue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{location}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{distance}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{results}\PY{p}{]}        
+            \PY{k}{except}\PY{p}{:}
+                \PY{n}{venues} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{return} \PY{n}{venues}
+        
+        
+        \PY{k}{def} \PY{n+nf}{get\PYZus{}restaurants}\PY{p}{(}\PY{n}{lats}\PY{p}{,} \PY{n}{lons}\PY{p}{,} \PY{n}{neighborhoods}\PY{p}{)}\PY{p}{:}
+            \PY{n}{restaurants} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+            \PY{n}{all\PYZus{}chinese\PYZus{}restaurants} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+            \PY{n}{location\PYZus{}restaurants} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{location\PYZus{}chinese\PYZus{}restaurants} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Obtaining venues around candidate locations:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{k}{for} \PY{n}{lat}\PY{p}{,} \PY{n}{lon}\PY{p}{,} \PY{n}{neighborhood} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{lats}\PY{p}{,} \PY{n}{lons}\PY{p}{,} \PY{n}{neighborhoods}\PY{p}{)}\PY{p}{:}
+                \PY{n}{venues} \PY{o}{=} \PY{n}{get\PYZus{}venues\PYZus{}near\PYZus{}location}\PY{p}{(}\PY{n}{lat}\PY{p}{,} \PY{n}{lon}\PY{p}{,} \PY{n}{food\PYZus{}category}\PY{p}{,} \PY{n}{CLIENT\PYZus{}ID}\PY{p}{,} \PY{n}{CLIENT\PYZus{}SECRET}\PY{p}{,} \PY{n}{radius}\PY{o}{=}\PY{l+m+mi}{600}\PY{p}{,} \PY{n}{limit}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+                \PY{n}{area\PYZus{}restaurants} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{chinese\PYZus{}restaurants} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{k}{for} \PY{n}{venue} \PY{o+ow}{in} \PY{n}{venues}\PY{p}{:}
+                    \PY{n}{venue\PYZus{}id} \PY{o}{=} \PY{n}{venue}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                    \PY{n}{venue\PYZus{}neighborhood} \PY{o}{=} \PY{n}{neighborhood}
+                    \PY{n}{venue\PYZus{}name} \PY{o}{=} \PY{n}{venue}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                    \PY{n}{venue\PYZus{}categories} \PY{o}{=} \PY{n}{venue}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+                    \PY{n}{venue\PYZus{}latlon} \PY{o}{=} \PY{n}{venue}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+                    \PY{n}{venue\PYZus{}address} \PY{o}{=} \PY{n}{venue}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}
+                    \PY{n}{venue\PYZus{}distance} \PY{o}{=} \PY{n}{venue}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}
+                    \PY{n}{is\PYZus{}chinese} \PY{o}{=} \PY{n}{is\PYZus{}chinese\PYZus{}restaurant}\PY{p}{(}\PY{n}{venue\PYZus{}categories}\PY{p}{,} \PY{n}{specific\PYZus{}filter}\PY{o}{=}\PY{n}{chinese\PYZus{}restaurant\PYZus{}categories}\PY{p}{)}
+                    \PY{n}{restaurant} \PY{o}{=} \PY{p}{(}\PY{n}{venue\PYZus{}id}\PY{p}{,} \PY{n}{venue\PYZus{}name}\PY{p}{,} \PY{n}{venue\PYZus{}latlon}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{venue\PYZus{}latlon}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{venue\PYZus{}address}\PY{p}{,} \PY{n}{venue\PYZus{}distance}\PY{p}{,} \PY{n}{is\PYZus{}chinese}\PY{p}{)}
+                    \PY{k}{if} \PY{n}{venue\PYZus{}distance}\PY{o}{\PYZlt{}}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{:}
+                        \PY{n}{area\PYZus{}restaurants}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{restaurant}\PY{p}{)}
+                    \PY{n}{restaurants}\PY{p}{[}\PY{n}{venue\PYZus{}id}\PY{p}{]} \PY{o}{=} \PY{n}{restaurant}
+                    \PY{k}{if} \PY{n}{is\PYZus{}chinese}\PY{p}{:}
+                        \PY{n}{all\PYZus{}chinese\PYZus{}restaurants}\PY{p}{[}\PY{n}{venue\PYZus{}id}\PY{p}{]} \PY{o}{=} \PY{n}{restaurant}
+                        \PY{n}{chinese\PYZus{}restaurants}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{restaurant}\PY{p}{)}
+                \PY{n}{location\PYZus{}restaurants}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{area\PYZus{}restaurants}\PY{p}{)}
+                \PY{n}{location\PYZus{}chinese\PYZus{}restaurants}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{chinese\PYZus{}restaurants}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ .}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ done.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{k}{return} \PY{n}{restaurants}\PY{p}{,} \PY{n}{all\PYZus{}chinese\PYZus{}restaurants}\PY{p}{,} \PY{n}{location\PYZus{}restaurants}\PY{p}{,} \PY{n}{location\PYZus{}chinese\PYZus{}restaurants}
+        
+        \PY{n}{restaurants}\PY{p}{,} \PY{n}{all\PYZus{}chinese\PYZus{}restaurants}\PY{p}{,} \PY{n}{location\PYZus{}restaurants}\PY{p}{,} \PY{n}{location\PYZus{}chinese\PYZus{}restaurants} \PY{o}{=} \PY{n}{get\PYZus{}restaurants}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhood}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Obtaining venues around candidate locations: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . done.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total number of restaurants:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{restaurants}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total number of Chinese restaurants:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{all\PYZus{}chinese\PYZus{}restaurants}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Percentage of Chinese restaurants: }\PY{l+s+si}{\PYZob{}:.2f\PYZcb{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{all\PYZus{}chinese\PYZus{}restaurants}\PY{p}{)} \PY{o}{/} \PY{n+nb}{len}\PY{p}{(}\PY{n}{restaurants}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average number of restaurants in neighborhood:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{r}\PY{p}{)} \PY{k}{for} \PY{n}{r} \PY{o+ow}{in} \PY{n}{location\PYZus{}restaurants}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Total number of restaurants: 1168
+Total number of Chinese restaurants: 34
+Percentage of Chinese restaurants: 2.91\%
+Average number of restaurants in neighborhood: 31.07894736842105
+
+    \end{Verbatim}
+
+    There are only 2.82\% Chinese restaurant in general, which already
+indicates a good opportunity. Let's now see all the collected
+restaurants in our area of interest on map, and let's also show Chinese
+restaurants in different color.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{map\PYZus{}t} \PY{o}{=} \PY{n}{folium}\PY{o}{.}\PY{n}{Map}\PY{p}{(}\PY{n}{location}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{43.645436}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{79.380978}\PY{p}{]}\PY{p}{,} \PY{n}{zoom\PYZus{}start}\PY{o}{=}\PY{l+m+mi}{12}\PY{p}{)}
+        \PY{n}{folium}\PY{o}{.}\PY{n}{Marker}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{43.645436}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{79.380978}\PY{p}{]}\PY{p}{,} \PY{n}{popup}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Toronto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{add\PYZus{}to}\PY{p}{(}\PY{n}{map\PYZus{}t}\PY{p}{)}
+        \PY{k}{for} \PY{n}{res} \PY{o+ow}{in} \PY{n}{restaurants}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n}{lat} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{;} \PY{n}{lon} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+            \PY{n}{is\PYZus{}chinese} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{]}
+            \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}} \PY{k}{if} \PY{n}{is\PYZus{}chinese} \PY{k}{else} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}
+            \PY{n}{folium}\PY{o}{.}\PY{n}{CircleMarker}\PY{p}{(}\PY{p}{[}\PY{n}{lat}\PY{p}{,} \PY{n}{lon}\PY{p}{]}\PY{p}{,} \PY{n}{radius}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{color}\PY{p}{,} \PY{n}{fill}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{fill\PYZus{}color}\PY{o}{=}\PY{n}{color}\PY{p}{,} \PY{n}{fill\PYZus{}opacity}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{add\PYZus{}to}\PY{p}{(}\PY{n}{map\PYZus{}t}\PY{p}{)}
+        \PY{n}{map\PYZus{}t}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} <folium.folium.Map at 0x24425d67b00>
+\end{Verbatim}
+            
+    \subsection{Methodology }\label{methodology}
+
+    In this project we will try to identify neighborhoods in Toronto that
+have low restaurant density, especially those with low Chinese
+restaurant density. We use neighborhoods definition from the wikipedia
+page listed in the previous section.
+
+We have already imported the data needed for the project from two
+sources: wikipedia page and foursquare API. The data contain the names
+and locations (coordinates) of the neighborhoods and the restaurants
+within them.
+
+In the following parts, we will explore the restaurant density across
+neighborhoods in Toronto and deep dive into the ones with low restaurant
+density to find the most promising neighborhoods for openning a new
+Chinese restaurant for our stakeholders. We will use both a rule based
+method and k-means clustering to filter out the neighborhoods.
+
+Finnally, we will summarize the analysis and present actionable
+conclusions for the stakeholders.
+
+    \subsection{Analysis }\label{analysis}
+
+    Firstly, let's calculate the number of restaurants and Chinese
+restaurants, and the distance to the closest Chinese restaurants in each
+neighborhood and compare them to the average value of all neighborhoods.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{location\PYZus{}restaurants\PYZus{}count} \PY{o}{=} \PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{res}\PY{p}{)} \PY{k}{for} \PY{n}{res} \PY{o+ow}{in} \PY{n}{location\PYZus{}restaurants}\PY{p}{]}
+        \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location\PYZus{}restaurants\PYZus{}count}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average number of restaurants in every area with radius=500m:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{location\PYZus{}restaurants\PYZus{}count}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Average number of restaurants in every area with radius=500m: 31.07894736842105
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+        
+        \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Histogram of restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Restaurants}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhoods}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} Text(0,0.5,'Neighborhoods')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Although on average there are 31 restaurants in each neighborhood, over
+1/3 of the neighborhoods have less than 10 restaurants in the area,
+indicating opportunity for business there.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{location\PYZus{}chinese\PYZus{}restaurants\PYZus{}count} \PY{o}{=} \PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{res}\PY{p}{)} \PY{k}{for} \PY{n}{res} \PY{o+ow}{in} \PY{n}{location\PYZus{}chinese\PYZus{}restaurants}\PY{p}{]}
+         \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{location\PYZus{}chinese\PYZus{}restaurants\PYZus{}count}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average number of Chinese restaurants in every area with radius=500m:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{location\PYZus{}chinese\PYZus{}restaurants\PYZus{}count}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Average number of Chinese restaurants in every area with radius=500m: 1.105263157894737
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Histogram of Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Chinese Restaurants}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhoods}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} Text(0,0.5,'Neighborhoods')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Similarly, we find that most Chinese restaurants are conjesting in four
+neighborhoods, leaving the others with only a few selection. And nearly
+half of the neighborhoods do not have a Chinese restaurant yet.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{distances\PYZus{}to\PYZus{}chinese\PYZus{}restaurant} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{lat}\PY{p}{,} \PY{n}{lon} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Latitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longitude}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n}{min\PYZus{}distance} \PY{o}{=} \PY{l+m+mi}{10000}
+             \PY{k}{for} \PY{n}{res} \PY{o+ow}{in} \PY{n}{all\PYZus{}chinese\PYZus{}restaurants}\PY{o}{.}\PY{n}{values}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{lat\PYZus{}c} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+                 \PY{n}{lon\PYZus{}c} \PY{o}{=} \PY{n}{res}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+                 \PY{n}{dist} \PY{o}{=} \PY{n}{cal\PYZus{}dist}\PY{p}{(}\PY{n}{lat}\PY{p}{,}\PY{n}{lon}\PY{p}{,}\PY{n}{lat\PYZus{}c}\PY{p}{,}\PY{n}{lon\PYZus{}c}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{dist}\PY{o}{\PYZlt{}}\PY{n}{min\PYZus{}distance}\PY{p}{:}
+                     \PY{n}{min\PYZus{}distance} \PY{o}{=} \PY{n}{dist}
+             \PY{n}{distances\PYZus{}to\PYZus{}chinese\PYZus{}restaurant}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{min\PYZus{}distance}\PY{p}{)}
+         
+         \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{distances\PYZus{}to\PYZus{}chinese\PYZus{}restaurant}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average distance to closest Chinese restaurant from each area center:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{round}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{km}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Average distance to closest Chinese restaurant from each area center: 0.53 km
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{edgecolor} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{black}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Histogram of distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Neighborhoods}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} Text(0,0.5,'Neighborhoods')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    However, the distribution of the distance to the closest Chinese
+restaurant of each neighborhood shows that actually almost 2/3
+neighborhoods have access to a Chinese restaurant within 500 meter to
+its center. This is because the neighborhoods in center Toronto are
+close to each other, so that the neighborhoods can easily access the
+Chinese restaurants in another neighborhood nearby.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{df\PYZus{}t}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:}   Postcode          Borough  \textbackslash{}
+         0      M4E     East Toronto   
+         1      M4K     East Toronto   
+         2      M4L     East Toronto   
+         3      M4M     East Toronto   
+         4      M4N  Central Toronto   
+         5      M4P  Central Toronto   
+         6      M4R  Central Toronto   
+         7      M4S  Central Toronto   
+         8      M4T  Central Toronto   
+         9      M4V  Central Toronto   
+         
+                                                 Neighborhood   Latitude  Longitude  \textbackslash{}
+         0                                        The Beaches  43.676357 -79.293031   
+         1                        The Danforth West,Riverdale  43.679557 -79.352188   
+         2                      The Beaches West,India Bazaar  43.668999 -79.315572   
+         3                                    Studio District  43.659526 -79.340923   
+         4                                      Lawrence Park  43.728020 -79.388790   
+         5                                   Davisville North  43.712751 -79.390197   
+         6                                 North Toronto West  43.715383 -79.405678   
+         7                                         Davisville  43.704324 -79.388790   
+         8                         Moore Park,Summerhill East  43.689574 -79.383160   
+         9  Deer Park,Forest Hill SE,Rathnelly,South Hill,{\ldots}  43.686412 -79.400049   
+         
+            Distance to Center  Restaurants in area  Chinese restaurants in area  \textbackslash{}
+         0            7.074931                    2                            0   
+         1            2.316830                   36                            0   
+         2            5.261988                   11                            0   
+         3            3.222700                   23                            1   
+         4            0.648280                    1                            1   
+         5            0.752838                    5                            0   
+         6            1.990953                    8                            1   
+         7            0.638590                   33                            1   
+         8            0.195288                    1                            0   
+         9            1.536078                    8                            2   
+         
+            Distance to Chinese restaurant  
+         0                        3.794722  
+         1                        0.964104  
+         2                        1.981819  
+         3                        0.057546  
+         4                        0.104774  
+         5                        0.106863  
+         6                        0.166384  
+         7                        0.091832  
+         8                        0.081521  
+         9                        0.064843  
+\end{Verbatim}
+            
+    Recall that our criterion to find the optimal neighborhoods for openning
+a Chinese restaurant are distance to city center, number of restaurants,
+number of Chinese restaurants, and distance to the closest Chinese
+restaurant. Now let's create a bubble chart to visualize the four
+features on the same plot.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+         
+         \PY{c+c1}{\PYZsh{}plt.figure(figsize=(20,10))}
+         \PY{c+c1}{\PYZsh{}plt.scatter(df\PYZus{}t[\PYZsq{}Distance to Chinese restaurant\PYZsq{}], df\PYZus{}t[\PYZsq{}Distance to Center\PYZsq{}], s=df\PYZus{}t[\PYZsq{}Restaurants in area\PYZsq{}]*20, c=df\PYZus{}t[\PYZsq{}Chinese restaurants in area\PYZsq{}]+1, label = df\PYZus{}t[\PYZsq{}Neighborhood\PYZsq{}], cmap=\PYZdq{}Blues\PYZdq{}, alpha=0.6, edgecolors=\PYZdq{}grey\PYZdq{}, linewidth=2)}
+         
+         \PY{c+c1}{\PYZsh{} Add titles (main and on axis)}
+         \PY{c+c1}{\PYZsh{}plt.xlabel(\PYZdq{}Distance to Chinese restaurant\PYZdq{})}
+         \PY{c+c1}{\PYZsh{}plt.ylabel(\PYZdq{}Distance to Center\PYZdq{})}
+         \PY{c+c1}{\PYZsh{}plt.title(\PYZdq{}Battle of the Neighborhood \PYZhy{} Chinese restaurants\PYZdq{})}
+          
+         \PY{c+c1}{\PYZsh{}plt.show()}
+         
+         \PY{n}{fig}\PY{p}{,} \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sc} \PY{o}{=} \PY{n}{ax}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{s}\PY{o}{=}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{*}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Blues}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.6}\PY{p}{,} \PY{n}{edgecolors}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{grey}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{txt} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{o}{.}\PY{n}{Postcode}\PY{p}{)}\PY{p}{:}
+             \PY{n}{ax}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}\PY{n}{txt}\PY{p}{,} \PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{iat}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{iat}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Distance to Chinese restaurant}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Distance to Center}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Battle of the Neighborhood \PYZhy{} Chinese restaurants}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} Text(0.5,1,'Battle of the Neighborhood - Chinese restaurants')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_31_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    In the chart, smaller size indicates less restaurants in the
+neighborhood and lighter color indicates less Chinese restaurants. From
+the chart, M5N and M6G are two obvious options with low number of both
+restaurants and Chinese restaurants, which are relatively close to city
+center, while not so close to a Chinese restaurant.
+
+Let's use the average number we calculated above as a benchmark to
+filter the neighborhoods with relatively low number of restaurants and
+Chinese restaurants and far from a Chinese restaurant. And then we can
+sort the neighborhoods by the distance to Toronto city center, and use a
+heat map to highlight the features.
+
+From the table below we could see that indeed M5N (Roselawn) and M6G
+(Christie) are on the top of the list, following by M7Y (Business Reply
+Mail Processing Centre 969 Eastern) and M6H (Dovercourt
+Village,Dufferin) which are a bit far from the city center, but with not
+too much competition. M6K (Brockton,Exhibition Place,Parkdale Village)
+has 16 restaurants, however, since it is closer to city center, and
+there are no Chinese restaurants in and around, it can also be a not bad
+option here. The other neighborhoods are too far from city center (M4L,
+M4E and M6S).
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{cm} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{diverging\PYZus{}palette}\PY{p}{(}\PY{l+m+mi}{240}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{n}{n}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} \PY{n}{as\PYZus{}cmap} \PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         
+         \PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{l+m+mi}{31}\PY{p}{)}\PY{o}{\PYZam{}}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{\PYZlt{}}\PY{l+m+mf}{1.1}\PY{p}{)}\PY{o}{\PYZam{}}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{\PYZgt{}}\PY{l+m+mf}{0.53}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{style}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:} <pandas.io.formats.style.Styler at 0x2442ce26ac8>
+\end{Verbatim}
+            
+    Apart from the rule based analysis, we can also use Kmeans to cluster
+the neighborhoods using their distance to city center, number of
+restaurants, number of Chinese restaurants and distance to the closest
+Chinese restaurants as features, to group the neighborhoods with similar
+characteristics.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{cluster} \PY{k}{import} \PY{n}{KMeans}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{preprocessing}
+         
+         \PY{n}{number\PYZus{}of\PYZus{}clusters} \PY{o}{=} \PY{l+m+mi}{15}
+         
+         \PY{n}{df\PYZus{}t\PYZus{}features} \PY{o}{=} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{values}
+         \PY{n}{df\PYZus{}t\PYZus{}features} \PY{o}{=} \PY{n}{preprocessing}\PY{o}{.}\PY{n}{StandardScaler}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}t\PYZus{}features}\PY{p}{)}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{df\PYZus{}t\PYZus{}features}\PY{p}{)}
+         \PY{n}{kmeans} \PY{o}{=} \PY{n}{KMeans}\PY{p}{(}\PY{n}{n\PYZus{}clusters}\PY{o}{=}\PY{n}{number\PYZus{}of\PYZus{}clusters}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{df\PYZus{}t\PYZus{}features}\PY{p}{)}
+\end{Verbatim}
+
+
+    We cluster the neighborhoods into 15 groups, the features are normalized
+in the model.
+
+The following table gives the average distance to city center, number of
+restaurants, number of Chinese restaurants and distance to the closest
+Chinese restaurants as features of the groups.
+
+Out of the groups, we find that group 13 and 4 have low number of
+restaurants and Chinese restaurants, and are far from a Chinese
+restaurant, however they are not so close to city center.
+
+Apart from that, we can also find that group 12, which is very close to
+the city center, have very low number of restaurants and no Chinese
+restaurants. Although the neighborhoods can access to a Chinese
+restaurant easily (84 meter on average), we can still assume a good
+opportunity there.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{kmeans}\PY{o}{.}\PY{n}{labels\PYZus{}}
+         \PY{p}{(}\PY{n}{df\PYZus{}t}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{style}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}45}]:} <pandas.io.formats.style.Styler at 0x2442a6f80b8>
+\end{Verbatim}
+            
+    Let's see what are those neighborhoods. Firstly, let's list
+neighborhoods in group 4 and 13. We can see that they match the ones we
+identify in the rule based analysis. The M
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{==}\PY{l+m+mi}{13}\PY{p}{)}\PY{o}{|}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{==}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{style}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}46}]:} <pandas.io.formats.style.Styler at 0x2442d6c9f28>
+\end{Verbatim}
+            
+    In group 12, M4T (Moore Park,Summerhill East) and M4W (Rosedale) have
+the biggest potential. They are almost located in the city center, and
+both have only one restaurants and no Chinese restaurants.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{p}{(}\PY{n}{df\PYZus{}t}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{==}\PY{l+m+mi}{12}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{n}{by}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{style}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Center}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chinese restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Restaurants in area}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+              \PY{o}{.}\PY{n}{background\PYZus{}gradient}\PY{p}{(}\PY{n}{cmap}\PY{o}{=}\PY{n}{cm}\PY{p}{,} \PY{n}{subset} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance to Chinese restaurant}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}47}]:} <pandas.io.formats.style.Styler at 0x2442d6c97f0>
+\end{Verbatim}
+            
+    We have found M5N (Roselawn), M6G (Christie), M7Y (Business Reply Mail
+Processing Centre 969 Eastern), M6H (Dovercourt Village,Dufferin), M6K
+(Brockton,Exhibition Place,Parkdale Village), M4T (Moore Park,Summerhill
+East) and M4W (Rosedale) as candidates to open Chinese restaurants. Now
+let's do some backgroud screening to make sure there is no reason not to
+open Chinese restaurants in these neighborhoods. For the sake of
+simplicity, the information is extracted from wikipedia.
+
+M5N (Roselawn)
+
+M6G (Christie)
+
+M7Y (Business Reply Mail Processing Centre 969 Eastern)
+
+M6H (Dovercourt Village,Dufferin)
+
+M6K (Brockton,Exhibition Place,Parkdale Village)
+
+M4T (Moore Park,Summerhill East)
+
+M4W (Rosedale)
+
+    \subsection{Results and Discussion }\label{results-and-discussion}
+
+    \subsection{Conclusion }\label{conclusion}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
